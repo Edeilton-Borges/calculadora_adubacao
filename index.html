@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Agrícola</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Calculadora Agrícola</h1>
+        <nav>
+            <button class="tablinks" onclick="openTab(event, 'adubacao')">Adubação</button>
+            <button class="tablinks" onclick="openTab(event, 'fitossanitario')">Fitossanitário</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Aba de Cálculo de Adubação -->
+        <section class="tabcontent" id="adubacao">
+            <h2>Calculadora de Adubação</h2>
+            <div class="form-container">
+                <form method="POST" action="/calcular_adubacao">
+                    <label for="area">Tamanho da área (ha):</label>
+                    <input type="number" id="area" name="area" step="0.01" required>
+
+                    <label for="necessidade">Necessidade da cultura (kg/ha):</label>
+                    <input type="number" id="necessidade" name="necessidade" required>
+
+                    <label for="composicao">Composição do fertilizante (%):</label>
+                    <input type="number" id="composicao" name="composicao" required>
+
+                    <button type="submit">Calcular</button>
+                </form>
+            </div>
+
+            <!-- Exibir Resultado -->
+            {% if resultado_adubacao %}
+            <div class="resultado">
+                <p><strong>Quantidade necessária de fertilizante:</strong> {{ resultado_adubacao }} kg</p>
+            </div>
+            {% endif %}
+        </section>
+
+        <!-- Aba de Cálculo Fitossanitário -->
+        <section class="tabcontent" id="fitossanitario">
+            <h2>Dosagem de Produto Fitossanitário</h2>
+            <div class="form-container">
+                <form method="POST" action="/calcular_fitossanitario">
+                    <label for="area_fito">Tamanho da área (ha):</label>
+                    <input type="number" id="area_fito" name="area_fito" step="0.01" required>
+
+                    <label for="dosagem">Dosagem recomendada (g ou ml/ha):</label>
+                    <input type="number" id="dosagem" name="dosagem" required>
+
+                    <button type="submit">Calcular</button>
+                </form>
+            </div>
+
+            <!-- Exibir Resultado -->
+            {% if resultado_fitossanitario %}
+            <div class="resultado">
+                <p><strong>Quantidade total de produto a ser aplicada:</strong> {{ resultado_fitossanitario }} g ou ml</p>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 - Todos os direitos reservados</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
